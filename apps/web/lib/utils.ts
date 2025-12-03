@@ -6,6 +6,12 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
+export const logger = (...args: any[]) => {
+    if (process.env.NODE_ENV === "development") {
+        console.log("%c[DEV]:", "background-color: yellow; color: black", args);
+    }
+};
+
 export function formatPrice(
     price: number | string,
     options: {
