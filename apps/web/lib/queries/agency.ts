@@ -135,3 +135,36 @@ export const updateAgencyConnectedId = async (
 
     return response;
 };
+
+export const getAuthUserDetails = async () => {
+    const { createClient } = await import("@/lib/supabase/server");
+    const supabase = await createClient();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+        return null;
+    }
+
+    const userData = await db.user.findUnique({
+        where: {
+            email: user.email!,
+        },
+        include: {
+            agency: {
+                include: {
+                    sidebarOptions: true,
+                    subAccounts: {
+                        include: {
+                            sidebarOptions: true,
+                        },
+                    },
+                },
+            },
+            permissions: true,
+        },
+    });
+
+    return userData;
+};
