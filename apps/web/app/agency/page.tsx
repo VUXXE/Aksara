@@ -17,7 +17,7 @@ interface AgencyPageProps {
 }
 
 const AgencyPage = async ({ searchParams }: AgencyPageProps) => {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data: { user: authUser } } = await supabase.auth.getUser();
 
     if (!authUser) {

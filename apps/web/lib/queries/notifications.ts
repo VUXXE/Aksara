@@ -14,7 +14,7 @@ export const saveActivityLogsNotification = async ({
     subAccountId?: string;
     description: string;
 }) => {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data: { user: authUser } } = await supabase.auth.getUser();
 
     let userData;
